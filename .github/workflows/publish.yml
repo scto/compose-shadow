@@ -17,6 +17,17 @@ jobs:
           java-version: 17
       - name: Setup gradle
         uses: gradle/actions/setup-gradle@v4
+
+      - name: Prepare token.properties file
+        run: |
+          if [ -f "$GITHUB_WORKSPACE/token.properties" ]; then
+            rm $GITHUB_WORKSPACE/token.properties
+          fi
+          echo "VCSPACE_TOKEN=${{ secrets.VCSPACE_TOKEN }}" >> $GITHUB_WORKSPACE/token.properties
+          echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> $GITHUB_WORKSPACE/token.properties
+          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> $GITHUB_WORKSPACE/token.properties
+          echo "OAUTH_REDIRECT_URL=${{ secrets.OAUTH_REDIRECT_URL }}" >> $GITHUB_WORKSPACE/token.properties
+          
       - name: Create local.properties file
         run: sh ./scripts/env-to-local-props.sh
       - name: Publish package

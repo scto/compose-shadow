@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILE="local.properties"
+FILE="$GITHUB_WORKSPACE/local.properties"
 
 if [ -f "$FILE" ]; then
     echo "$FILE already exists"
@@ -18,10 +18,12 @@ check_env_var "GITHUB_USERNAME"
 check_env_var "GITHUB_PASSWORD"
 
 echo "Creating $FILE..."
-
 {
-    echo "githubPackagesUsername=$GITHUB_USERNAME"
-    echo "githubPackagesPassword=$GITHUB_PASSWORD"
+    echo "githubPackagesUsername=${{ secrets.GITHUB_USERNAME }}"
+    echo "githubPackagesPassword=${{ secrets.GITHUB_PASSWORD }}"
+
+#    echo "githubPackagesUsername=$GITHUB_USERNAME"
+#    echo "githubPackagesPassword=$GITHUB_PASSWORD"
 } >>"$FILE"
 
 echo "$FILE created ✅"

@@ -8,12 +8,10 @@ if [ -f "$FILE" ]; then
 fi
 
 echo "Creating $FILE..."
-{
-    echo "githubPackagesUsername=${{ secrets.GITHUB_USERNAME }}"
-    echo "githubPackagesPassword=${{ secrets.GITHUB_PASSWORD }}"
+echo "githubPackagesUsername=${{ secrets.GITHUB_USERNAME }}" >> $GITHUB_WORKSPACE/local.properties
+echo "githubPackagesPassword=${{ secrets.GITHUB_PASSWORD }}" >> $GITHUB_WORKSPACE/local.properties
 #    echo "githubPackagesUsername=$GITHUB_USERNAME"
 #    echo "githubPackagesPassword=$GITHUB_PASSWORD"
-} >>"$FILE"
     
 check_env_var() {
     if [ -z "${!1}" ]; then
